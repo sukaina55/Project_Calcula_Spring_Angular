@@ -1,0 +1,39 @@
+<div class="calculator">
+  <div class="screen">{{ display || '0' }}</div>
+
+  <!-- Number buttons -->
+  <div class="button-row">
+    <button *ngFor="let num of [1, 2, 3]" (click)="onButtonClick(num.toString())">{{ num }}</button>
+  </div>
+  <div class="button-row">
+    <button *ngFor="let num of [4, 5, 6]" (click)="onButtonClick(num.toString())">{{ num }}</button>
+  </div>
+  <div class="button-row">
+    <button *ngFor="let num of [7, 8, 9]" (click)="onButtonClick(num.toString())">{{ num }}</button>
+  </div>
+  <div class="button-row">
+    <button (click)="onButtonClick('0')">0</button>
+    <button (click)="onButtonClick('.')">.</button>
+  </div>
+
+  <!-- Plugin selection -->
+  <div class="plugin-selection">
+    <label for="plugin">Select Plugin:</label>
+    <select id="plugin" [(ngModel)]="selectedPlugin" (change)="selectPlugin(selectedPlugin)">
+      <option *ngFor="let plugin of plugins" [value]="plugin">
+        {{ plugin }}
+      </option>
+    </select>
+  </div>
+
+  <!-- Operator button -->
+  <div class="button-row" *ngIf="operatorSymbol">
+    <button class="operator" (click)="onButtonClick(operatorSymbol)">{{ operatorSymbol }}</button>
+  </div>
+
+  <!-- Actions -->
+  <div class="button-row">
+    <button (click)="clear()">C</button>
+    <button (click)="calculate()" [disabled]="!selectedPlugin || !display.includes(operatorSymbol)">=</button>
+  </div>
+</div>
